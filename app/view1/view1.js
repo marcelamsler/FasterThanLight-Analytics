@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute', 'myApp.stomp'])
+angular.module('myApp.view1', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view1', {
@@ -9,53 +9,23 @@ angular.module('myApp.view1', ['ngRoute', 'myApp.stomp'])
         });
     }])
 
-    .controller('MainCtrl', ['$scope', '$stomp', function ($scope, $stomp) {
+    .controller('MainCtrl', ['$scope', '$websocket', function ($scope, $websocket) {
+
+        var smoothie = new SmoothieChart({maxValue:5000,minValue:-5000});
+        smoothie.streamTo(document.getElementById("mycanvas"));
 
 
-        $stomp.setDebug(function (args) {
-            document.getElementById('log').value += args + '\n';
-        });
+        var line1 = new TimeSeries();
 
-        var REST_API_URL = "";
+        var ws = new WebSocket("ws://localhost:8089/pilotData");
 
-        $stomp.connect(REST_API_URL + '/messages', connectHeaders)
-
-            // frame = CONNECTED headers
-            .then(function (frame) {
-
-                var subscription = $stomp.subscribe('/topic/simulator/news', function (payload, headers, res) {
-                    $scope.payload = payload;
-                }, {
-                    "headers": "are awesome"
-                });
-
-                subscription.unsubscribe();
-
-                // Send message
-                $stomp.send('/dest', {
-                    message: 'body'
-                }, {
-                    priority: 9,
-                    custom: 42 //Custom Headers
-                });
-
-                // Disconnect
-                $stomp.disconnect(function () {
-
-                });
-            });
-
-
-        var message_handler = function (message) {
-            return $scope.$apply(function () {
-                return $scope.onReceiveMessage(message);
-            });
+        ws.onmessage = function(e){
+            var message = JSON.parse(e.data);
+            if (message.g != null) {
+                console.log(message.timeStamp, message.g[2]);
+                line1.append(message.timeStamp, message.g[2]);
+            }
         };
-
-
-
-        $scope.onReceiveMessage = function (message) {
-            console.log(message);
-        }
+        smoothie.addTimeSeries(line1 , { strokeStyle:'rgb(0, 255, 0)', lineWidth:3 });
 
     }]);
