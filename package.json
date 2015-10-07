@@ -4,6 +4,7 @@
   "main": "app/index.html",
   "dependencies": {
     "amqp": "0.1.7",
+    "ng-stomp": "0.0.2",
     "uuid": "1.4.1"
   }
 }
