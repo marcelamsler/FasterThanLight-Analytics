@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div class="flot-chart">
                     <div class="flot-chart-content" id="flot-line-chart">
-                        <canvas id="mycanvas" width="600" height="300"></canvas>
+                        <canvas chart-from-websocket ws-url="ws://localhost:8089/pilotData" min-value="-10000" max-value="10000" id="unfiltered-chart" width="600" height="300"></canvas>
                     </div>
                 </div>
             </div>
