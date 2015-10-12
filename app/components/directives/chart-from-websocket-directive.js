@@ -18,6 +18,7 @@ angular.module('fasterThanLight').directive('chartFromWebsocket', function () {
             trackPartChart.streamTo(element[0].children[1], 0);
 
             var trackPartLine = new TimeSeries();
+            var lastTrackPartTimeStamp = Date.now();
 
 
             var ws = new WebSocket(scope.wsUrl);
@@ -45,8 +46,10 @@ angular.module('fasterThanLight').directive('chartFromWebsocket', function () {
                             break;
                     }
 
+                    lastTrackPartTimeStamp = e.timeStamp;
+                    trackPartLine.append(lastTrackPartTimeStamp, value)
 
-                    trackPartLine.append(e.timeStamp, value);
+
                 }
             };
 
