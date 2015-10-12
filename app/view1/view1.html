@@ -6,7 +6,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Sensor Data
@@ -14,10 +14,10 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="flot-chart">
-                    <div class="flot-chart-content" id="chart1">
-                        <canvas chart-from-websocket ws-url="ws://localhost:8089/pilotData" min-value="-10000"
-                                max-value="10000" message-type="SensorEvent" id="unsmoothed-chart" width="600"
-                                height="300"></canvas>
+                    <div class="flot-chart-content" id="chart1" chart-from-websocket ws-url="ws://localhost:8089/pilotData" min-value="-6000"
+                         max-value="6000" >
+                        <canvas width="700" height="500"></canvas>
+                        <canvas width="700" height="100"></canvas>
                     </div>
                 </div>
             </div>

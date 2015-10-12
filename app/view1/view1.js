@@ -11,14 +11,6 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
 
     .controller('MainCtrl', ['$scope', function ($scope) {
 
-        var lineChartData = [
-
-            {
-                label: "Series 1",
-                values: [{time: Date.now(), y: 100}, {time: Date.now(), y: 150}]
-            }
-        ];
-
         var myChart = $('#gaugeChart').epoch({
             type: 'time.gauge',
             value: 0.5
