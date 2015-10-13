@@ -36,20 +36,18 @@ angular.module('fasterThanLight').directive('chartFromWebsocket', function () {
                     var value;
                     switch (message.newTrackType) {
                         case "LEFT":
-                            value = 1;
+                            value = -1;
                             break;
                         case "RIGHT":
-                            value = -1;
+                            value = 1;
                             break;
                         case "STRAIGHT":
                             value = 0;
                             break;
                     }
 
+                    trackPartLine.append(lastTrackPartTimeStamp, value);
                     lastTrackPartTimeStamp = e.timeStamp;
-                    trackPartLine.append(lastTrackPartTimeStamp, value)
-
-
                 }
             };
 
