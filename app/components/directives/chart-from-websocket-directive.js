@@ -47,6 +47,7 @@ angular.module('fasterThanLight').directive('chartFromWebsocket', function () {
                     }
 
                     trackPartLine.append(lastTrackPartTimeStamp, value);
+                    scope.$emit('newTrackPart', {duration: e.timeStamp - lastTrackPartTimeStamp, type: message.newTrackType});
                     lastTrackPartTimeStamp = e.timeStamp;
                 }
             };
