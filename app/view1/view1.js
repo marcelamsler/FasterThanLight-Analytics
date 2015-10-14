@@ -18,17 +18,16 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
             value: 0.5
         });
 
-        var ws = new WebSocket("ws://localhost:8089/pilotData");
-
-        ws.onmessage = function (e) {
-            var parsedMessage = JSON.parse(e.data);
-            var message = parsedMessage.genericMessage;
-            var messageType = parsedMessage.eventMessageType;
-
-            if (messageType === "SmoothedSensorData") {
-                myChart.push(100 / 256 * message.currentPower / 100);
-            }
+        this.onNewCurrentPowerHandler = function (data) {
+            myChart.push(100 / 256 * data.power / 100);
         };
+
+        var onNewCurrentPowerHandler = {
+            type: "SmoothedSensorData",
+            callback: this.onNewCurrentPowerHandler
+        };
+
+        WebSocketService.addEventHandler(onNewCurrentPowerHandler);
 
         $scope.startNewSession = function () {
             WebSocketService.startNewSession();

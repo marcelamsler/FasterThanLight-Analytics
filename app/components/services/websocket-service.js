@@ -45,7 +45,7 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
             actualSessionData.sensorData.push(data);
 
         } else if (messageType == "SmoothedSensorData") {
-            var data = {timeStamp: e.timeStamp, value: message.smoothValue};
+            var data = {timeStamp: e.timeStamp, value: message.smoothValue, power: message.currentPower};
             actualSessionData.smoothedSensorData.push(data);
 
         } else if(messageType == "TrackPartChanged") {
