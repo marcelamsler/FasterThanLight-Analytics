@@ -12,7 +12,8 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "~3.3.0",
-    "ng-websocket": "~0.2.1"
+    "ng-websocket": "~0.2.1",
+    "n3-line-chart": "~1.1.12"
   },
   "resolutions": {
     "angular": "1.4.6"

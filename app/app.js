@@ -5,7 +5,8 @@ angular.module('fasterThanLight', [
     'ngRoute',
     'fasterThanLight.view1',
     'fasterThanLight.view2',
-    'ngWebsocket'
+    'ngWebsocket',
+    'n3-line-chart'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/view1'});

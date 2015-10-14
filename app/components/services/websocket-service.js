@@ -4,8 +4,7 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
     var webSocket = new WebSocket("ws://localhost:8089/pilotData");
     var actualSessionData, actualSessionNumber;
 
-
-    if (localStorage['actualSessionNumber']) {
+    if (localStorage['actualSessionNumber'] != null) {
         actualSessionNumber = JSON.parse(localStorage['actualSessionNumber']);
     } else {
         actualSessionNumber = 0;
@@ -21,8 +20,8 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
         eventHandlers.splice(index, 1);
     };
 
-    this.startNewSession = function () {
-        localStorage["session" + this.actualSessionNumber] = JSON.stringify(angular.copy(actualSessionData));
+    this.saveSession = function () {
+        localStorage["session" + actualSessionNumber] = JSON.stringify(angular.copy(actualSessionData));
 
         actualSessionNumber++;
         localStorage['actualSessionNumber'] = actualSessionNumber;
@@ -63,6 +62,6 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
 
     };
 
-    this.startNewSession();
+    this.saveSession();
 
 });

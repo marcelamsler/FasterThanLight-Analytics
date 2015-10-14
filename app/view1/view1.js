@@ -12,6 +12,7 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
 
     .controller('MainCtrl', ['$scope', 'WebsocketService', function ($scope, WebSocketService) {
 
+        $scope.currentSession = localStorage['actualSessionNumber'];
 
         var myChart = $('#gaugeChart').epoch({
             type: 'time.gauge',
@@ -29,8 +30,9 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
 
         WebSocketService.addEventHandler(onNewCurrentPowerHandler);
 
-        $scope.startNewSession = function () {
-            WebSocketService.startNewSession();
+        $scope.saveSession = function () {
+            WebSocketService.saveSession();
+            $scope.currentSession++;
         }
 
     }
