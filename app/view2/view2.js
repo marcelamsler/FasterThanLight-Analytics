@@ -10,50 +10,54 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
     }])
     .controller('View2Ctrl', ['$scope', function ($scope) {
 
-        var historySessions = [];
+        $scope.sessions = findValidSessions();
+        console.log($scope.sessions);
+        $scope.dataSessions = prepareSessionDataForCharts($scope.sessions);
 
-        for (var property in localStorage) {
-            if (localStorage.hasOwnProperty(property)) {
+        configureChart();
 
-                if (property.indexOf("session") > -1 && localStorage[property] != "undefined") {
-                    historySessions[property] = JSON.parse(localStorage[property]);
-                }
-            }
-        }
-
-        var dataSessions = [];
-
-        for (var session in historySessions) {
-            if (historySessions[session].sensorData != null) {
-
-                var sessionData = historySessions[session].sensorData.map(function (dataPoint) {
-                    return {
-                        x: dataPoint.timeStamp,
-                        sensorData: dataPoint.value,
-                        smoothedData: null,
-                        trackPartData: null
+        function configureChart() {
+            $scope.options = {
+                lineMode: "linear",
+                series: [
+                    {
+                        y: "sensorData",
+                        label: "Sensor",
+                        color: "#e377c2"
                     }
-                });
-
-                dataSessions.push(sessionData);
-            }
-
+                ]
+            };
         }
 
-        console.log(dataSessions);
-
-        $scope.data = dataSessions[2];
-
-
-        $scope.options = {
-            lineMode: "linear",
-            series: [
-                {
-                    y: "sensorData",
-                    label: "Sensor",
-                    color: "#e377c2"
+        function prepareSessionDataForCharts(sessions) {
+            var dataSessions = [];
+            for (var session in sessions) {
+                if (sessions[session].sensorData != null) {
+                    var sessionData = sessions[session].sensorData.map(function (dataPoint) {
+                        return {
+                            x: dataPoint.timeStamp,
+                            sensorData: dataPoint.value,
+                            smoothedData: null,
+                            trackPartData: null
+                        }
+                    });
+                    dataSessions.push(sessionData);
                 }
-            ]
-        };
+            }
+            return dataSessions;
+        }
+
+        function findValidSessions() {
+            var sessions = [];
+            for (var property in localStorage) {
+                if (localStorage.hasOwnProperty(property)) {
+                    if (property.indexOf("session") > -1 && localStorage[property] != "undefined") {
+                        sessions.push(JSON.parse(localStorage[property]));
+                    }
+                }
+            }
+            return sessions;
+        }
+
     }]
 );
