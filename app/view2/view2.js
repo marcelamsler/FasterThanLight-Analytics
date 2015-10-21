@@ -16,6 +16,14 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
 
         configureChart();
 
+
+        $scope.clearHistory = function() {
+            localStorage.clear();
+            $scope.dataSessions = [];
+            $scope.sessions = [];
+
+        };
+
         function configureChart() {
             $scope.options = {
                 lineMode: "linear",
