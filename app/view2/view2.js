@@ -12,7 +12,10 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
 
         $scope.sessions = findValidSessions();
         console.log($scope.sessions);
+        $scope.actualTrackPartData = "STRAIGHT";
+        $scope.actualTrackPartIndex = 0;
         $scope.dataSessions = prepareSessionDataForCharts($scope.sessions);
+
 
         configureChart();
 
@@ -29,7 +32,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                 drawDots: false,
                 tooltip: {mode: 'scrubber', formatter: function(x, y, series) {return y;}},
                 axes: {
-                    x: {key: 'x', type: 'date', ticks: 10},
+                    x: {key: 'x', type: 'date', ticks: 10,zoomable:true},
                     sensorData: {type: 'linear', ticks: 5, innerTicks: true, grid: true},
                     smoothedData: {type: 'linear'},
                     trackPartData: {type: 'line'}
@@ -48,7 +51,8 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                     {
                         y: "trackPartData",
                         label: "trackPartData",
-                        color: "#ff3333"
+                        type: "column",
+                        color: 'rgba(251, 110, 78, 0.13)'
                     }
                 ]
             };
@@ -73,8 +77,10 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
 
                     console.log("sessionData", sessionData);
                     dataSessions.push(sessionData);
+                    $scope.actualTrackPartData = "STRAIGHT";
                 }
             }
+
             return dataSessions;
 
 
@@ -97,14 +103,22 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
         }
 
         function getTrackPartDataForDataPoint(dataPoint, session) {
-            var trackPartData = session.trackPartData.filter(function (tDataPoint) {
-                return isSimilarTime(tDataPoint.timeStamp, dataPoint.timeStamp);
-            })[0];
+            var newTrackPartData;
+            var trackPartData;
 
-            if (trackPartData == null) {
-                trackPartData = {
-                    value: null
+            for (var i = $scope.actualTrackPartIndex; i < session.trackPartData.length; i++) {
+                if (session.trackPartData[i].timeStamp < dataPoint.timeStamp) {
+                    newTrackPartData = session.trackPartData[i + 1];
+                    $scope.actualTrackPartIndex++;
                 }
+            }
+
+            if (newTrackPartData == null) {
+                trackPartData = $scope.actualTrackPartData
+            } else {
+                trackPartData = newTrackPartData;
+                $scope.actualTrackPartData = newTrackPartData;
+
             }
 
             var value;
@@ -122,10 +136,12 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                     value = null;
             }
 
+
             return {
                 value: value
             };
         }
+
 
         function findValidSessions() {
             var sessions = [];
