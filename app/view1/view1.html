@@ -6,7 +6,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Sensor Data
@@ -24,10 +24,23 @@
                 <div class="flot-chart">
                     <div class="flot-chart-content" id="chart1" chart-directive>
                         <canvas width="900" height="500"></canvas>
-                        <canvas width="900" height="100"></canvas>
+                        <canvas width="900" height="100" style="display:block;"></canvas>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                RaceTrack
+            </div>
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div class="flot-chart-content" id="chart3">
+                        <canvas race-track width="1300" height="600" ></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -42,7 +55,7 @@
             </div>
             <!-- /.panel-body -->
         </div>
-        <racetrack></racetrack>
+
         <!-- /.panel -->
     </div>
 </div>
