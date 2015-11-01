@@ -11,12 +11,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
     .controller('View2Ctrl', ['$scope', function ($scope) {
 
         $scope.sessions = findValidSessions();
-        console.log($scope.sessions);
-        $scope.actualTrackPartData = "STRAIGHT";
-        $scope.actualTrackPartIndex = 0;
         $scope.dataSessions = prepareSessionDataForCharts($scope.sessions);
-
-
         configureChart();
 
 
@@ -61,6 +56,10 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
         function prepareSessionDataForCharts(sessions) {
             var dataSessions = [];
             for (var session in sessions) {
+                $scope.actualTrackPartData = {
+                    value: "STRAIGHT"
+                };
+                $scope.actualTrackPartIndex = 0;
                 if (sessions[session].sensorData != null) {
                     var actualSession = sessions[session];
                     var sessionData = actualSession.sensorData.map(function (dataPoint) {
@@ -74,16 +73,12 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                             trackPartData: trackPartData.value
                         }
                     });
-
-                    console.log("sessionData", sessionData);
+                    console.log("sessionData prepared for chart", sessionData);
                     dataSessions.push(sessionData);
-                    $scope.actualTrackPartData = "STRAIGHT";
                 }
             }
 
             return dataSessions;
-
-
         }
 
         function isSimilarTime(firstTimeStamp, secondTimeStamp) {
@@ -147,7 +142,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
             var sessions = [];
             for (var property in localStorage) {
                 if (localStorage.hasOwnProperty(property)) {
-                    if (property.indexOf("session") > -1 && localStorage[property] != "undefined") {
+                    if (property.indexOf("session") > -1 && localStorage[property] != "undefined" && localStorage[property].length > 300) {
                         sessions.push(JSON.parse(localStorage[property]));
                     }
                 }

@@ -28,7 +28,18 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
             callback: this.onNewCurrentPowerHandler
         };
 
+        this.onLapCompleted = function(data) {
+          $scope.saveSession();
+        };
+
         WebSocketService.addEventHandler(onNewCurrentPowerHandler);
+
+        var onLapCompletedHandler = {
+            type: "LapCompleted",
+            callback: this.onLapCompleted
+        };
+
+        WebSocketService.addEventHandler(onLapCompletedHandler);
 
         $scope.saveSession = function () {
             WebSocketService.saveSession();
