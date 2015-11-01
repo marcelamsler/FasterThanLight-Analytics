@@ -34,8 +34,6 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
 
     };
 
-
-
     webSocket.onmessage = function(e){
         var parsedMessage = JSON.parse(e.data);
         var message = parsedMessage.genericMessage;

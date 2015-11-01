@@ -25,13 +25,11 @@ It is possible to draw a Racetrack with it. Just send the necessary data over th
                     "id": 76,
                     "angle": 45,
                     "radius": 30,
-                    "length": 50.00
                 }, 
                 {
                     "id": 77,
                     "angle": 0,
                     "radius": 0,
-                    "length": 100.00,
                     "speedLimit": 200
                     
                 }

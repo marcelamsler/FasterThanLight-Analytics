@@ -25,10 +25,12 @@ angular.module('fasterThanLight').directive('chartDirective', function () {
 
             scope.line1 = new TimeSeries();
             scope.line2 = new TimeSeries();
+            scope.line3 = new TimeSeries();
             scope.trackPartLine = new TimeSeries();
 
             scope.sensorDataChart.addTimeSeries(scope.line1, {lineWidth: 2, strokeStyle: '#3f5aff'});
             scope.sensorDataChart.addTimeSeries(scope.line2, {lineWidth: 2, strokeStyle: '#ffffff'});
+            scope.sensorDataChart.addTimeSeries(scope.line3, {lineWidth: 2, strokeStyle: '#ff3333'});
             scope.trackPartChart.addTimeSeries(scope.trackPartLine, {lineWidth: 2, strokeStyle: '#ff3333'});
 
         }
@@ -39,13 +41,13 @@ angular.module('fasterThanLight').controller('ChartCtrl', ['$scope', 'WebsocketS
 
     var lastTrackPartTimeStamp = Date.now();
 
-
     this.onNewSensorData = function (data) {
         $scope.line1.append(data.timeStamp, data.value);
     };
 
     this.onNewSmoothedSensorData = function (data) {
         $scope.line2.append(data.timeStamp, data.value);
+        $scope.line3.append(data.timeStamp, data.power * 10);
     };
 
     this.onNewTrackPart = function (data) {

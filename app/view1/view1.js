@@ -14,25 +14,9 @@ angular.module('fasterThanLight.view1', ['ngRoute'])
 
         $scope.currentSession = localStorage['actualSessionNumber'];
 
-        var myChart = $('#gaugeChart').epoch({
-            type: 'time.gauge',
-            value: 0.5
-        });
-
-        this.onNewCurrentPowerHandler = function (data) {
-            myChart.push(100 / 256 * data.power / 100);
-        };
-
-        var onNewCurrentPowerHandler = {
-            type: "SmoothedSensorData",
-            callback: this.onNewCurrentPowerHandler
-        };
-
         this.onLapCompleted = function(data) {
           $scope.saveSession();
         };
-
-        WebSocketService.addEventHandler(onNewCurrentPowerHandler);
 
         var onLapCompletedHandler = {
             type: "LapCompleted",
