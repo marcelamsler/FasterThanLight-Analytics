@@ -66,8 +66,7 @@ angular.module('fasterThanLight').controller('raceTrackCtrl', ['$scope', 'Websoc
 
         var ctx = canvas.getContext("2d");
         clear(canvas);
-        ctx.fillRect(0, 0, 50, 50);
-        ctx.fillStyle = "#A0A0A0";
+        ctx.fillStyle = "#393939";
         ctx.strokeStyle = "#F00000";
         ctx.lineWidth = 3;
         $scope.width = 20;
@@ -77,7 +76,7 @@ angular.module('fasterThanLight').controller('raceTrackCtrl', ['$scope', 'Websoc
 
         // Draw the racetrack
         tracks.forEach(function (sector) {
-            ctx.fillStyle = "#A0A0A0";
+            ctx.fillStyle = "#393939";
             if (angular.isUndefined(sector.radius)) {
                 if (angular.isDefined(sector.speedLimit)) {
                     ctx.fillStyle = "#FF0000";
