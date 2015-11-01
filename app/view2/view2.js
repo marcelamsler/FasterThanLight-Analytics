@@ -28,7 +28,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                 tooltip: {mode: 'scrubber', formatter: function(x, y, series) {return y;}},
                 axes: {
                     x: {key: 'x', type: 'date', ticks: 10,zoomable:true},
-                    sensorData: {type: 'linear', ticks: 5, innerTicks: true, grid: true},
+                    sensorData: {type: 'linear'},
                     smoothedData: {type: 'linear'},
                     trackPartData: {type: 'line'}
                 },
@@ -69,8 +69,9 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                         return {
                             x: dataPoint.timeStamp,
                             sensorData: dataPoint.value,
-                            smoothedData: smoothedData.value,
-                            trackPartData: trackPartData.value
+                            smoothedData: smoothedData.power,
+                            trackPartData: trackPartData.value,
+                            currentPower: 100.0
                         }
                     });
                     console.log("sessionData prepared for chart", sessionData);
@@ -89,6 +90,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
             var smoothedData = session.smoothedSensorData.filter(function (sDataPoint) {
                 return isSimilarTime(sDataPoint.timeStamp, dataPoint.timeStamp);
             })[0];
+
             if (smoothedData == null) {
                 smoothedData = {
                     value: null

@@ -47,7 +47,7 @@ angular.module('fasterThanLight').controller('ChartCtrl', ['$scope', 'WebsocketS
 
     this.onNewSmoothedSensorData = function (data) {
         $scope.line2.append(data.timeStamp, data.value);
-        $scope.line3.append(data.timeStamp, data.power * 10);
+        $scope.line3.append(data.timeStamp, data.currentPower * 10);
     };
 
     this.onNewTrackPart = function (data) {
