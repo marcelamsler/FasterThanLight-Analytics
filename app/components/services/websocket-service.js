@@ -34,6 +34,8 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
 
     };
 
+
+
     webSocket.onmessage = function(e){
         var parsedMessage = JSON.parse(e.data);
         var message = parsedMessage.genericMessage;
@@ -50,6 +52,8 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
         } else if(messageType == "TrackPartChanged") {
             var data =  {timeStamp: e.timeStamp, value: message.newTrackType};
             actualSessionData.trackPartData.push(data);
+        } else if(messageType == "LapCompleted") {
+            saveSession();
         }
 
         eventHandlers.forEach(function(handler) {
