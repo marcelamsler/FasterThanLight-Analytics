@@ -50,6 +50,7 @@ angular.module('fasterThanLight').service('WebsocketService', function(){
         } else if(messageType == "TrackPartChanged") {
             var data =  {timeStamp: e.timeStamp, value: message.newTrackType};
             actualSessionData.trackPartData.push(data);
+
         } else if(messageType == "trackInfo") {
             var data = message;
         }

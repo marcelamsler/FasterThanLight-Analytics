@@ -48,6 +48,11 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                         label: "trackPartData",
                         type: "column",
                         color: 'rgba(251, 110, 78, 0.13)'
+                    },
+                    {
+                        y: "power",
+                        label: "power",
+                        color: '#129C2A'
                     }
                 ]
             };
@@ -60,18 +65,23 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
                     value: "STRAIGHT"
                 };
                 $scope.actualTrackPartIndex = 0;
+                $scope.lastCurrentPowerValue = 0;
                 if (sessions[session].sensorData != null) {
                     var actualSession = sessions[session];
                     var sessionData = actualSession.sensorData.map(function (dataPoint) {
                         var smoothedData = getSmoothedDataForDataPoint(dataPoint, actualSession);
                         var trackPartData = getTrackPartDataForDataPoint(dataPoint, actualSession);
+                        var power = smoothedData.currentPower;
+                        if (power == null) {
+                            power = 0;
+                        }
 
                         return {
                             x: dataPoint.timeStamp,
                             sensorData: dataPoint.value,
-                            smoothedData: smoothedData.power,
+                            smoothedData: smoothedData.value,
                             trackPartData: trackPartData.value,
-                            currentPower: 100.0
+                            power: power
                         }
                     });
                     console.log("sessionData prepared for chart", sessionData);
@@ -93,8 +103,13 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
 
             if (smoothedData == null) {
                 smoothedData = {
-                    value: null
+                    value: null,
+                    currentPower: $scope.lastCurrentPowerValue
+
                 }
+            } else {
+                smoothedData.currentPower *= 20;
+                $scope.lastCurrentPowerValue = smoothedData.currentPower;
             }
             return smoothedData;
         }
