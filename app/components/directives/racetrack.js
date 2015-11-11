@@ -44,7 +44,6 @@ angular.module('fasterThanLight').controller('raceTrackCtrl', ['$scope', 'Websoc
 
     $scope.init = function () {
         setBaseAnchorAndScaleFactor();
-        drawOnCanvas();
     };
 
     var updateSections = function (changedSections) {

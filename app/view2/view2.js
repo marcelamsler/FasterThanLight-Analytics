@@ -108,7 +108,7 @@ angular.module('fasterThanLight.view2', ['ngRoute'])
 
                 }
             } else {
-                smoothedData.currentPower *= 20;
+                smoothedData.currentPower *= 10;
                 $scope.lastCurrentPowerValue = smoothedData.currentPower;
             }
             return smoothedData;
